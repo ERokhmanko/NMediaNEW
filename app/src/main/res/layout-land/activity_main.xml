@@ -97,7 +97,7 @@
          />
 
     <ImageButton
-        android:id="@+id/likes"
+        android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/indent"
@@ -114,9 +114,9 @@
         android:textSize="16sp"
         android:layout_marginStart="@dimen/indent_icon_count"
         android:layout_marginLeft="@dimen/indent_icon_count"
-        app:layout_constraintBottom_toBottomOf="@id/likes"
-        app:layout_constraintStart_toEndOf="@id/likes"
-        app:layout_constraintTop_toTopOf="@id/likes"
+        app:layout_constraintBottom_toBottomOf="@id/like"
+        app:layout_constraintStart_toEndOf="@id/like"
+        app:layout_constraintTop_toTopOf="@id/like"
         tools:text="10"
         />
 
@@ -138,9 +138,9 @@
         android:background="@android:color/transparent"
         android:layout_marginStart="@dimen/indent"
         android:layout_marginLeft="@dimen/indent"
-        app:layout_constraintBottom_toBottomOf="@id/likes"
+        app:layout_constraintBottom_toBottomOf="@id/like"
         app:layout_constraintStart_toEndOf="@id/like_count"
-        app:layout_constraintTop_toTopOf="@id/likes"
+        app:layout_constraintTop_toTopOf="@id/like"
         app:srcCompat="@drawable/ic_baseline_share_24"
          />
 
