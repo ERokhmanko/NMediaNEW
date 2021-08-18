@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="@dimen/indent"
     tools:context=".MainActivity">
 
@@ -27,7 +27,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/barrier"
-        tools:srcCompat="@sample/post_avatar" />
+        app:srcCompat="@drawable/ic_netology"
+        />
 
     <ImageButton
         android:id="@+id/menu"
@@ -54,7 +55,7 @@
         app:layout_constraintVertical_chainStyle="packed"
 
         tools:text="@sample/posts.json/data/author"
-         />
+        />
 
     <TextView
         android:id="@+id/published"
@@ -74,7 +75,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="avatar, published, menu"
-         />
+        />
 
     <TextView
         android:id="@+id/content"
@@ -94,7 +95,7 @@
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="content"
-         />
+        />
 
     <ImageButton
         android:id="@+id/like"
@@ -105,7 +106,7 @@
         app:layout_constraintTop_toBottomOf="@id/barrier_icon"
         app:srcCompat="@drawable/ic_baseline_favorite_border_24"
         android:background="@android:color/transparent"
-         />
+        />
 
     <TextView
         android:id="@+id/like_count"
@@ -142,7 +143,7 @@
         app:layout_constraintStart_toEndOf="@id/like_count"
         app:layout_constraintTop_toTopOf="@id/like"
         app:srcCompat="@drawable/ic_baseline_share_24"
-         />
+        />
 
     <ImageButton
         android:id="@+id/viewed"

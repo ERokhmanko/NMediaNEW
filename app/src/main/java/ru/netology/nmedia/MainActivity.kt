@@ -2,13 +2,12 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.ImageButton
-import kotlinx.android.synthetic.main.activity_main.*
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.utils.Utils
 import ru.netology.nmedia.viewmodel.PostViewModel
 import androidx.activity.viewModels
+import ru.netology.nmedia.adapter.PostCallback
+import ru.netology.nmedia.adapter.PostsAdapter
 
 
 class MainActivity : AppCompatActivity() {
@@ -18,28 +17,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val viewModel: PostViewModel by viewModels()
-        viewModel.data.observe(this){
-            post ->
-            with(binding) {
-                author.text = post.author
-                content.text = post.content
-                published.text = post.published
-                likeCount.text = Utils().reductionInNumbers(post.likesCount)
-                shareCount.text = Utils().reductionInNumbers(post.sharesCount)
-                like.setImageResource(if (post.likedByMe) R.drawable.ic_baseline_favorite_24
-                else R.drawable.ic_baseline_favorite_border_24)
+
+        val adapter = PostsAdapter(object : PostCallback {
+            override fun onLike(post: Post) {
+                viewModel.like(post.id)
             }
-        }
 
-       like.setOnClickListener {
-          viewModel.like()
-        }
+            override fun onShare(post: Post) {
+                viewModel.share(post.id)
+            }
 
-        share.setOnClickListener {
-            viewModel.share()
-        }
+        })
 
+        binding.container.adapter = adapter
+        binding.container.animation = null // отключаем анимацию
+
+        viewModel.data.observe(this) { posts ->
+            adapter.submitList(posts)
+        }
     }
 }
+
 
 
