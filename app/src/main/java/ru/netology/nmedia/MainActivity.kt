@@ -2,6 +2,7 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
@@ -27,13 +28,28 @@ class MainActivity : AppCompatActivity() {
                 viewModel.share(post.id)
             }
 
+            override fun remove(post: Post) {
+                viewModel.remove(post.id)
+            }
+
         })
 
-        binding.container.adapter = adapter
-        binding.container.animation = null // отключаем анимацию
+        binding.list.adapter = adapter
+        binding.list.animation = null // отключаем анимацию
 
         viewModel.data.observe(this) { posts ->
             adapter.submitList(posts)
+        }
+
+        binding.save.setOnClickListener {
+            with(binding.content){
+                if (text.isNullOrBlank()){
+                    Toast.makeText(this@MainActivity, context.getString(R.string.error_empty_content), Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                viewModel.changeContent(text.toString())
+                viewModel.save()
+            }
         }
     }
 }

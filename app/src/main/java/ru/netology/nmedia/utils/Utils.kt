@@ -1,6 +1,6 @@
 package ru.netology.nmedia.utils
 
-class Utils {
+object Utils {
 
     fun reductionInNumbers(count: Int): String {
         val formatCount = when{
