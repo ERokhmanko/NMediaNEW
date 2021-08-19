@@ -5,4 +5,5 @@
     <string name="post_text">Введите текст поста</string>
     <string name="description_post_like">Нравится</string>
     <string name="error_empty_content">Контент не может быть пустым</string>
+    <string name="menu_edit">Редактировать</string>
 </resources>

@@ -34,11 +34,14 @@ class PostViewModel : ViewModel() {
             if (it.content != text)
                 edited.value = it.copy(content = text)
         }
+    }
 
-
+    fun edit(post: Post) {
+        edited.value = post
     }
 
     fun like(id: Long) = repository.like(id)
     fun share(id: Long) = repository.share(id)
     fun remove(id: Long) = repository.remove(id)
+
 }

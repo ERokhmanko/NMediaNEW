@@ -12,14 +12,15 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.utils.Utils
 import java.util.zip.Inflater
 
-interface PostCallback{
+interface PostCallback {
     fun onLike(post: Post)
     fun onShare(post: Post)
     fun remove(post: Post)
+    fun edit(post: Post)
 }
 
 class PostsAdapter(private val postCallback: PostCallback) :
-    ListAdapter <Post, PostViewHolder>(PostsDiffCallback()) {
+    ListAdapter<Post, PostViewHolder>(PostsDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,8 +34,10 @@ class PostsAdapter(private val postCallback: PostCallback) :
 
 }
 
-class PostViewHolder(private val binding: CardPostBinding,
-                    private val postCallback: PostCallback) : RecyclerView.ViewHolder(binding.root) {
+class PostViewHolder(
+    private val binding: CardPostBinding,
+    private val postCallback: PostCallback
+) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         with(binding) {
             author.text = post.author
@@ -56,26 +59,29 @@ class PostViewHolder(private val binding: CardPostBinding,
             }
 
             menu.setOnClickListener {
-               PopupMenu(it.context, it).apply {
-                   inflate(R.menu.post_options)
-                   setOnMenuItemClickListener{
-                       menuItem ->
-                       when(menuItem.itemId) {
-                           R.id.post_remove-> {
-                               postCallback.remove(post)
-                               true
-                           }
-                           else -> false
-                       }
-                   }
-               }.show()
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.post_options)
+                    setOnMenuItemClickListener { menuItem ->
+                        when (menuItem.itemId) {
+                            R.id.post_remove -> {
+                                postCallback.remove(post)
+                                true
+                            }
+                            R.id.post_edit -> {
+                                postCallback.edit(post)
+                                true
+                            }
+                            else -> false
+                        }
+                    }
+                }.show()
             }
 
         }
     }
 }
 
-class PostsDiffCallback : DiffUtil.ItemCallback<Post>(){
+class PostsDiffCallback : DiffUtil.ItemCallback<Post>() {
 
     override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
         return oldItem.id == newItem.id

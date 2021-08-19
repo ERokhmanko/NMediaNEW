@@ -9,6 +9,7 @@ import ru.netology.nmedia.viewmodel.PostViewModel
 import androidx.activity.viewModels
 import ru.netology.nmedia.adapter.PostCallback
 import ru.netology.nmedia.adapter.PostsAdapter
+import ru.netology.nmedia.utils.Utils
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,6 +33,10 @@ class MainActivity : AppCompatActivity() {
                 viewModel.remove(post.id)
             }
 
+            override fun edit(post: Post) {
+                viewModel.edit(post)
+            }
+
         })
 
         binding.list.adapter = adapter
@@ -41,14 +46,33 @@ class MainActivity : AppCompatActivity() {
             adapter.submitList(posts)
         }
 
+        viewModel.edited.observe(this) { post ->
+            if (post.id == 0L) {
+                return@observe
+            }
+
+            with(binding.content) {
+                setText(post.content)
+                requestFocus()
+            }
+        }
+
         binding.save.setOnClickListener {
-            with(binding.content){
-                if (text.isNullOrBlank()){
-                    Toast.makeText(this@MainActivity, context.getString(R.string.error_empty_content), Toast.LENGTH_SHORT).show()
+            with(binding.content) {
+                if (text.isNullOrBlank()) {
+                    Toast.makeText(
+                        this@MainActivity,
+                        context.getString(R.string.error_empty_content),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     return@setOnClickListener
                 }
                 viewModel.changeContent(text.toString())
                 viewModel.save()
+
+                setText("")// очищает окно ввода
+                clearFocus()//убирает курсор
+                Utils.hideKeyboard(it)//скрывает клавиатуру
             }
         }
     }
