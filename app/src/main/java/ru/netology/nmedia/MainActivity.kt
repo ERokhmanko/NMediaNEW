@@ -2,11 +2,13 @@ package ru.netology.nmedia
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import ru.netology.nmedia.databinding.ActivityMainBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 import androidx.activity.viewModels
+import kotlinx.android.synthetic.main.activity_main.*
 import ru.netology.nmedia.adapter.PostCallback
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.utils.Utils
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun edit(post: Post) {
+                cancel_editing.visibility = View.VISIBLE
                 viewModel.edit(post)
             }
 
@@ -74,6 +77,12 @@ class MainActivity : AppCompatActivity() {
                 clearFocus()//убирает курсор
                 Utils.hideKeyboard(it)//скрывает клавиатуру
             }
+        }
+
+        binding.cancelEditing.setOnClickListener {
+            viewModel.cancelEditing()
+            binding.content.setText("")
+            cancel_editing.visibility = View.INVISIBLE
         }
     }
 }
