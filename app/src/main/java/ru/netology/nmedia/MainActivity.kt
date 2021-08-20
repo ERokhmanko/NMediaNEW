@@ -9,6 +9,7 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewmodel.PostViewModel
 import androidx.activity.viewModels
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.view.*
 import ru.netology.nmedia.adapter.PostCallback
 import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.utils.Utils
@@ -36,8 +37,9 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun edit(post: Post) {
-                cancel_editing.visibility = View.VISIBLE
+                group.visibility = View.VISIBLE
                 viewModel.edit(post)
+                post_text.text = post.content
             }
 
         })
@@ -82,7 +84,8 @@ class MainActivity : AppCompatActivity() {
         binding.cancelEditing.setOnClickListener {
             viewModel.cancelEditing()
             binding.content.setText("")
-            cancel_editing.visibility = View.INVISIBLE
+            group.visibility = View.GONE
+            Utils.hideKeyboard(it)
         }
     }
 }
