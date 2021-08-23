@@ -75,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.changeContent(text.toString())
                 viewModel.save()
 
+                binding.group.visibility = View.GONE
                 setText("")// очищает окно ввода
                 clearFocus()//убирает курсор
                 Utils.hideKeyboard(it)//скрывает клавиатуру
