@@ -92,15 +92,18 @@
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="content" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/indent"
-        android:background="@android:color/transparent"
+        style="@style/Widget.AppCompat.LikeChecked"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier_icon"
-        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
+        app:icon="@drawable/ic_like_24dp"
+        app:iconTint="@color/color_like"
+        tools:checked="true"/>
+
 
     <TextView
         android:id="@+id/like_count"

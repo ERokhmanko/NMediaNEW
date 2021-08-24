@@ -45,10 +45,11 @@ class PostViewHolder(
             published.text = post.published
             likeCount.text = Utils.reductionInNumbers(post.likesCount)
             shareCount.text = Utils.reductionInNumbers(post.sharesCount)
-            like.setImageResource(
-                if (post.likedByMe) R.drawable.ic_baseline_favorite_24
-                else R.drawable.ic_baseline_favorite_border_24
-            )
+            like.isChecked = post.likedByMe
+//            like.setButtonDrawable(
+//                if (post.likedByMe) R.drawable.ic_baseline_favorite_24
+//                else R.drawable.ic_baseline_favorite_border_24
+//            )
 
             like.setOnClickListener {
                 postCallback.onLike(post)
