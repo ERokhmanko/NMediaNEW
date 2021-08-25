@@ -43,8 +43,8 @@ class PostViewHolder(
             author.text = post.author
             content.text = post.content
             published.text = post.published
-            likeCount.text = Utils.reductionInNumbers(post.likesCount)
-            shareCount.text = Utils.reductionInNumbers(post.sharesCount)
+            like.text = Utils.reductionInNumbers(post.likesCount)
+            share.text = Utils.reductionInNumbers(post.sharesCount)
             like.isChecked = post.likedByMe
 //            like.setButtonDrawable(
 //                if (post.likedByMe) R.drawable.ic_baseline_favorite_24
