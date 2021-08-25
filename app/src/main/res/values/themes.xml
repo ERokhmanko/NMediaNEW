@@ -18,16 +18,9 @@
         <item name="iconTint">@color/color_like</item>
     </style>
 
-    <style name="Widget.AppCompat.Share" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="iconTint">@color/color_share</item>
+    <style name="Widget.AppCompat.ElementsPostCard" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="iconTint">@color/color_control_normal</item>
     </style>
 
-    <style name="Widget.AppCompat.Viewed" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="iconTint">@color/color_viewed</item>
-    </style>
-
-    <style name="Widget.AppCompat.Menu" parent="Widget.MaterialComponents.Button.TextButton">
-        <item name="iconTint">@color/color_menu</item>
-    </style>
 
 </resources>
