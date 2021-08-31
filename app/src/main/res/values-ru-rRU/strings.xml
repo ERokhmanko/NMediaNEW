@@ -7,4 +7,8 @@
     <string name="error_empty_content">Контент не может быть пустым</string>
     <string name="menu_edit">Редактировать</string>
     <string name="edit_message">Редактирование</string>
+    <string name="share_post">Поделиться постом</string>
+    <string name="description_post_save">Сохранить</string>
+    <string name="add_post">Добавить пост</string>
+    <string name="video_chooser">Выберите приложение</string>
 </resources>

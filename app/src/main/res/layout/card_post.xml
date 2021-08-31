@@ -60,7 +60,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="avatar, published, menu" />
+        app:constraint_referenced_ids="avatar, published, menu"
+         />
 
     <TextView
         android:id="@+id/content"
@@ -68,18 +69,28 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/indent"
         android:layout_marginBottom="@dimen/indent"
-        app:layout_constraintBottom_toTopOf="@id/barrier_icon"
+        app:layout_constraintBottom_toTopOf="@id/barrier_videoView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/barrier"
         tools:text="@sample/posts.json/data/content" />
+
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/barrier_videoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="content"
+         />
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:barrierDirection="bottom"
-        app:constraint_referenced_ids="content" />
+        app:constraint_referenced_ids="view_for_video"
+        />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
@@ -119,6 +130,35 @@
         app:layout_constraintTop_toBottomOf="@id/barrier_icon"
         app:icon="@drawable/ic_baseline_remove_red_eye_24"
         tools:text="5"/>
+
+    <View
+        android:id="@+id/view_for_video"
+        android:layout_width="372dp"
+        android:layout_height="270dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barrier_videoView" />
+
+    <ImageButton
+        android:id="@+id/play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/view_for_video"
+        app:layout_constraintEnd_toEndOf="@+id/view_for_video"
+        app:layout_constraintStart_toStartOf="@+id/view_for_video"
+        app:layout_constraintTop_toTopOf="@+id/view_for_video"
+        app:srcCompat="@android:drawable/ic_media_play"
+        />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_for_video, play" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,7 +13,8 @@ class PostRepositoryInMemory : PostRepository {
             content = "Н бежать быстрее",
             published = "21 мая в 19:37",
             likesCount = 1,
-            sharesCount = 2
+            sharesCount = 2,
+            video = "https://www.youtube.com/watch?v=WhWc3b3KhnY"
         ),
         Post(
             id = nextId++,
@@ -74,6 +75,8 @@ class PostRepositoryInMemory : PostRepository {
     }
 
     override fun cancelEditing(post: Post) {
-        posts.map { if (it.id != post.id) it}
+        posts.map { if (it.id != post.id) it }
     }
+
+
 }

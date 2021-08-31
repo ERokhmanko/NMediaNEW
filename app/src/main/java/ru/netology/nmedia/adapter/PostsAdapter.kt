@@ -1,8 +1,10 @@
 package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +19,7 @@ interface PostCallback {
     fun onShare(post: Post)
     fun remove(post: Post)
     fun edit(post: Post)
+    fun onVideo(post: Post)
 }
 
 class PostsAdapter(private val postCallback: PostCallback) :
@@ -50,6 +53,7 @@ class PostViewHolder(
 //                if (post.likedByMe) R.drawable.ic_baseline_favorite_24
 //                else R.drawable.ic_baseline_favorite_border_24
 //            )
+            if (post.video != "") group.visibility = View.VISIBLE
 
             like.setOnClickListener {
                 postCallback.onLike(post)
@@ -57,6 +61,14 @@ class PostViewHolder(
 
             share.setOnClickListener {
                 postCallback.onShare(post)
+            }
+
+            play.setOnClickListener {
+                postCallback.onVideo(post)
+            }
+
+            viewForVideo.setOnClickListener {
+                postCallback.onVideo(post)
             }
 
             menu.setOnClickListener {
@@ -77,6 +89,8 @@ class PostViewHolder(
                     }
                 }.show()
             }
+
+
 
         }
     }
