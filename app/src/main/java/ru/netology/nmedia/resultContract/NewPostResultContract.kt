@@ -1,10 +1,10 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.resultContract
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import androidx.activity.result.contract.ActivityResultContracts
+import ru.netology.nmedia.NewPostActivity
 
 class NewPostResultContract : ActivityResultContract<String, String?>() {
 
