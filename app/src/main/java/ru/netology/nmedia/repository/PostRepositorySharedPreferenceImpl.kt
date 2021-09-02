@@ -15,9 +15,11 @@ class PostRepositorySharedPreferenceImpl(context: Context) : PostRepository {
     private val gson = Gson()
     private val key = "posts"
     private val type = TypeToken.getParameterized(List::class.java, Post::class.java).type
+    private var nextId = 1L
 
     init {
         pref.getString(key, null)?.let {
+            nextId = posts[0].id + 1
             posts = gson.fromJson(it, type)
             data.value = posts
         }
@@ -52,6 +54,13 @@ class PostRepositorySharedPreferenceImpl(context: Context) : PostRepository {
     }
 
     override fun save(post: Post) {
+        posts = if (post.id == 0L) {
+            listOf(post.copy(id = nextId++)) + posts
+        } else {
+            posts.map { if (it.id != post.id) it else it.copy(content = post.content) }
+        }
+
+        data.value = posts
         syncing()
     }
 
