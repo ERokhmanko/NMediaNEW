@@ -19,8 +19,8 @@ class PostRepositorySharedPreferenceImpl(context: Context) : PostRepository {
 
     init {
         pref.getString(key, null)?.let {
-            nextId = posts[0].id + 1
             posts = gson.fromJson(it, type)
+            nextId = posts[0].id + 1
             data.value = posts
         }
     }

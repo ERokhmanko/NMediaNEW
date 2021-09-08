@@ -22,8 +22,8 @@ class PostRepositoryFileImpl(private val context: Context) : PostRepository {
         val file = context.filesDir.resolve(fileName)
         if (file.exists()) {
             context.openFileInput(fileName).bufferedReader().use {
-                nextId = posts[0].id + 1
                 posts = gson.fromJson(it, type)
+                nextId = posts[0].id + 1
                 data.value = posts
             }
         } else {
