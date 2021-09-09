@@ -36,19 +36,21 @@ class SinglePostFragment : Fragment() {
                 }
             }
 
-            binding.author.text = singlePost?.author
-            binding.content.text = singlePost?.content
-            binding.published.text = singlePost?.published
+            with(binding){
+                author.text = singlePost?.author
+                content.text = singlePost?.content
+                published.text = singlePost?.published
 
-            binding.like.text = singlePost?.let { it -> Utils.reductionInNumbers(it.likesCount) }
-            binding.share.text = singlePost?.sharesCount?.let { it ->
-                Utils.reductionInNumbers(
-                    it
-                )
+                like.text = singlePost?.let { it -> Utils.reductionInNumbers(it.likesCount) }
+                share.text = singlePost?.sharesCount?.let { it ->
+                    Utils.reductionInNumbers(
+                        it
+                    )
+                }
+                like.isChecked = singlePost?.likedByMe == true
+                if (singlePost?.video != "") binding.group.visibility = View.VISIBLE
+
             }
-            binding.like.isChecked = singlePost?.likedByMe == true
-            if (singlePost?.video != "") binding.group.visibility = View.VISIBLE
-
         }
 
 
