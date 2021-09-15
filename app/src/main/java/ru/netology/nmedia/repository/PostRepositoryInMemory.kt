@@ -36,9 +36,9 @@ class PostRepositoryInMemory : PostRepository {
 
     private val data = MutableLiveData(posts)
 
-    override fun get(): LiveData<List<Post>> = data
+    override fun getAll(): LiveData<List<Post>> = data
 
-    override fun like(id: Long) {
+    override fun likedById(id: Long) {
 
         posts = posts.map {
             val counter = if (it.likedByMe) it.likesCount - 1 else it.likesCount + 1
@@ -48,7 +48,7 @@ class PostRepositoryInMemory : PostRepository {
         data.value = posts
     }
 
-    override fun share(id: Long) {
+    override fun shareById(id: Long) {
 
         posts = posts.map {
             val counter = it.sharesCount + 1
@@ -58,7 +58,7 @@ class PostRepositoryInMemory : PostRepository {
         data.value = posts
     }
 
-    override fun remove(id: Long) {
+    override fun removeById(id: Long) {
         posts = posts.filter { it.id != id }
         data.value = posts
     }

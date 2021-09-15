@@ -25,9 +25,9 @@ class PostRepositorySharedPreferenceImpl(context: Context) : PostRepository {
         }
     }
 
-    override fun get(): LiveData<List<Post>> = data
+    override fun getAll(): LiveData<List<Post>> = data
 
-    override fun like(id: Long) {
+    override fun likedById(id: Long) {
         posts = posts.map {
             val counter = if (it.likedByMe) it.likesCount - 1 else it.likesCount + 1
             if (it.id != id) it else it.copy(likedByMe = !it.likedByMe, likesCount = counter)
@@ -37,7 +37,7 @@ class PostRepositorySharedPreferenceImpl(context: Context) : PostRepository {
         syncing()
     }
 
-    override fun share(id: Long) {
+    override fun shareById(id: Long) {
         posts = posts.map {
             val counter = it.sharesCount + 1
             if (it.id != id) it else it.copy(share = true, sharesCount = counter)
@@ -47,7 +47,7 @@ class PostRepositorySharedPreferenceImpl(context: Context) : PostRepository {
         syncing()
     }
 
-    override fun remove(id: Long) {
+    override fun removeById(id: Long) {
         posts = posts.filter { it.id != id }
         data.value = posts
         syncing()
