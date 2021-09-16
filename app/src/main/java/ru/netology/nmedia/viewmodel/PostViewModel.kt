@@ -30,6 +30,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let {
             repository.save(it)
         }
+        repository.saveDraft(null)
         edited.value = emptyPost
     }
 
@@ -49,7 +50,10 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     fun share(id: Long) = repository.shareById(id)
     fun remove(id: Long) = repository.removeById(id)
     fun cancelEditing() = edited.value?.let {
-        repository.cancelEditing(it)
+//        repository.cancelEditing(it)
     }
+
+    fun saveDraft(draft: String?) = repository.saveDraft(draft)
+    fun getDraft(): String? = repository.getDraft()
 
 }

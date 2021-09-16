@@ -66,7 +66,7 @@ class PostRepositorySQLiteImpl(private val dao: PostDao) :
         data.value = posts
     }
 
-    override fun cancelEditing(post: Post) {
-        TODO("Not yet implemented")
-    }
+    override fun saveDraft(draft: String?) = dao.saveDraft(draft)
+
+    override fun getDraft(): String? = dao.getDraft()
 }

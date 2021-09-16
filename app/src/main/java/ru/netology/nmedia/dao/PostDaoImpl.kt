@@ -8,7 +8,7 @@ import ru.netology.nmedia.dto.Post
 class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
 
     companion object {
-        val DDL = """
+        val DDL_POSTS = """
         CREATE TABLE ${PostColumns.TABLE} (
             ${PostColumns.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT,
             ${PostColumns.COLUMN_AUTHOR} TEXT NOT NULL,
@@ -19,6 +19,12 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             ${PostColumns.COLUMN_SHARE} BOOLEAN NOT NULL DEFAULT 0,
             ${PostColumns.COLUMN_SHARE_COUNT} INTEGER NOT NULL DEFAULT 0
         );
+        """.trimIndent()
+
+        val DDL_DRAFT = """
+            CREATE TABLE ${DraftColumns.TABLE} (
+            ${DraftColumns.COLUMN_CONTENT} TEXT
+            );
         """.trimIndent()
     }
 
@@ -92,13 +98,42 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         db.execSQL(
             """
                 UPDATE posts SET 
-                shareCount = shareCount + 1 END,
-                share = 1 END
+                shareCount = shareCount + 1,
+                share = 1
                 WHERE id = ?;
                 
             """.trimIndent(), arrayOf(id)
         )
     }
+
+    override fun saveDraft(draft: String?) {
+        if (draft == null) {
+            db.delete(DraftColumns.TABLE, null, null)
+        } else {
+            val values = ContentValues().apply {
+                    put(PostColumns.COLUMN_CONTENT, draft)
+                }
+            db.replace(DraftColumns.TABLE, null, values)
+        }
+    }
+
+    override fun getDraft(): String? =
+        db.query(
+            DraftColumns.TABLE,
+            arrayOf(DraftColumns.COLUMN_CONTENT),
+            null,
+            null,
+            null,
+            null,
+            null
+        ).use {
+            if (!it.moveToFirst()) {
+                null
+            } else {
+                it.getString(it.getColumnIndexOrThrow(DraftColumns.COLUMN_CONTENT))
+            }
+        }
+
 
     private fun map(cursor: Cursor): Post {
         with(cursor) {
@@ -136,4 +171,9 @@ object PostColumns {
         COLUMN_SHARE_COUNT
     )
 
+}
+
+object DraftColumns {
+    const val TABLE = "draft"
+    const val COLUMN_CONTENT = "content"
 }

@@ -14,13 +14,18 @@ class AppDb private constructor(db: SQLiteDatabase) {
         private var instance: AppDb? = null
 
         fun getInstance(context: Context): AppDb {
-            return instance ?: synchronized(this){
-                instance ?: AppDb(buildDataBase(context, arrayOf(PostDaoImpl.DDL)))
+            return instance ?: synchronized(this) {
+                instance ?: AppDb(
+                    buildDataBase(
+                        context,
+                        arrayOf(PostDaoImpl.DDL_POSTS, PostDaoImpl.DDL_DRAFT)
+                    )
+                )
             }
         }
 
-    private fun buildDataBase(context: Context, DDLs: Array<String>) =
-        DbHelper(context, 1, "app.db", DDLs).writableDatabase
+        private fun buildDataBase(context: Context, DDLs: Array<String>) =
+            DbHelper(context, 1, "app.db", DDLs).writableDatabase
     }
 }
 
