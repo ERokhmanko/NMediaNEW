@@ -31,6 +31,7 @@ class PostRepositorySQLiteImpl(private val dao: PostDao) :
                 )
             }
         }
+        data.value = posts
     }
 
     override fun shareById(id: Long) {
@@ -42,6 +43,7 @@ class PostRepositorySQLiteImpl(private val dao: PostDao) :
                 if (it.id != id) it else it.copy(share = true, sharesCount = counter)
             }
         }
+        data.value = posts
     }
 
     override fun removeById(id: Long) {
