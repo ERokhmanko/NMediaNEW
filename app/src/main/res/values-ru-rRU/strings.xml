@@ -14,4 +14,5 @@
     <string name="channel_remote_name">Уведомление сервера</string>
     <string name="channel_remote_description">Уведомление от удаленного сервиса</string>
     <string name="notification_user_liked">Пользователю %1$s понравился пост %2$s</string>
+    <string name="notification_user_new_post">"Пользователь %1$s опубликовал пост: %2$s "</string>
 </resources>

@@ -4,8 +4,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
@@ -34,15 +36,26 @@ class FCMService : FirebaseMessagingService() {
 
     override fun onMessageReceived(message: RemoteMessage) {
 //        println(Gson().toJson(message))
-        message.data["action"]?.let {
-            when (Action.valueOf(it)) {
-                Action.LIKE -> handleLike(
-                    Gson().fromJson(
-                        message.data["content"],
-                        Like::class.java
+
+        try {
+            message.data["action"]?.let {
+                when (Action.valueOf(it)) {
+                    Action.LIKE -> handleLike(
+                        Gson().fromJson(
+                            message.data["content"],
+                            Like::class.java
+                        )
                     )
-                )
+                    Action.NEW_POST -> handleNewPost(
+                        Gson().fromJson(
+                            message.data["content"],
+                            NewPost::class.java
+                        )
+                    )
+                }
             }
+        } catch (e: IllegalArgumentException) {
+            //Здесь что-то надо написать, но я не знаю что :)
         }
     }
 
@@ -53,6 +66,7 @@ class FCMService : FirebaseMessagingService() {
     private fun handleLike(like: Like) {
         val notification = NotificationCompat.Builder(this, channelId)
             .setSmallIcon(R.drawable.ic_notification)
+            .setLargeIcon(AppCompatResources.getDrawable(this, R.drawable.ic_netology)?.toBitmap())
             .setContentTitle(
                 getString(
                     R.string.notification_user_liked,
@@ -65,10 +79,27 @@ class FCMService : FirebaseMessagingService() {
         NotificationManagerCompat.from(this).notify(Random.nextInt(100_000), notification)
 
     }
+
+    private fun handleNewPost(newPost: NewPost) {
+        val notification = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setContentTitle(
+                getString(
+                    R.string.notification_user_new_post,
+                    newPost.userName,
+                    newPost.textPost
+                )
+            )
+            .setStyle(NotificationCompat.BigTextStyle().bigText(newPost.textPost))
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .build()
+
+        NotificationManagerCompat.from(this).notify(Random.nextInt(100_000), notification)
+    }
 }
 
 enum class Action {
-    LIKE
+    LIKE, NEW_POST
 }
 
 data class Like(
@@ -76,4 +107,9 @@ data class Like(
     val userName: String,
     val postId: Long,
     val postAuthor: String
+)
+
+data class NewPost(
+    val userName: String,
+    val textPost: String
 )
